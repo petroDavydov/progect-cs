@@ -172,3 +172,4 @@ cython_debug/
 teacher_answer.py
 desission/
 numpy-lesson.py
+pandas-lesson.py
