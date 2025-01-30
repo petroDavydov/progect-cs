@@ -121,3 +121,119 @@ print("Using ffill: \n", df_ffill)
 print("\\nUsing bfill: \n", df_bfill)
 
 print("********************************************\n")
+print(f"Робота з даними у форматі CSV \n")
+
+users = pd.read_csv("users.csv")
+
+print(users)
+
+print("********************************************\n")
+
+
+contacts = pd.DataFrame(
+    {
+        "name": [
+            "Allen Raymond",
+            "Chaim Lewis",
+            "Kennedy Lane",
+            "Wylie Pope",
+            "Cyrus Jackson",
+            "John Peterson W",
+        ],
+        "email": [
+            "nulla.ante@vestibul.co.uk",
+            "dui.in@egetlacus.ca",
+            "mattis.Cras@nonenimMauris.net",
+            "est@utquamvel.net",
+            "nibh@semsempererat.com",
+            "johnpeterson@peter.com",
+
+        ],
+        "phone": [
+            "(992) 914-3792",
+            "(294) 840-6685",
+            "(542) 451-7038",
+            "(692) 802-2949",
+            "(501) 472-5218",
+            "(333) 333-3333",
+        ],
+        "favorite": [False, False, True, False, True, True],
+    },
+    index=[1, 2, 3, 4, 5, 6],
+)
+
+contacts.to_csv("data.csv", index=False)
+
+print("********************************************\n")
+
+
+contacts = pd.DataFrame(
+    {
+        "name": [
+            "Allen Raymond",
+            "Chaim Lewis",
+            "Kennedy Lane",
+            "Wylie Pope",
+            "Cyrus Jackson",
+        ],
+        "email": [
+            "nulla.ante@vestibul.co.uk",
+            "dui.in@egetlacus.ca",
+            "mattis.Cras@nonenimMauris.net",
+            "est@utquamvel.net",
+            "nibh@semsempererat.com",
+        ],
+        "phone": [
+            "(992) 914-3792",
+            "(294) 840-6685",
+            "(542) 451-7038",
+            "(692) 802-2949",
+            "(501) 472-5218",
+        ],
+        "favorite": [False, False, True, False, True],
+    },
+    index=[1, 2, 3, 4, 5],
+)
+
+contacts.to_excel('contacts.xlsx', sheet_name='contacts')
+
+# -----------
+print("********************************************\n")
+
+print(f"Після запису файл contacts, прочитав з файлу: \n")
+
+contacts = pd.read_excel("contacts.xlsx")
+
+print(f"This is from file contacts.xlsx: \n", contacts)
+
+print("********************************************\n")
+
+print(f"Робота з файлами JSON \n")
+
+
+data = {
+    "name": {"1": "Michael", "2": "John", "3": "Liza"},
+    "country": {"1": "Canada", "2": "USA", "3": "Australia"},
+    "city": {"1": "Monreal", "2": "New York", "3": "Sidney"}
+}
+
+employees = pd.DataFrame(data)
+print(employees)
+
+employees.to_json("employees.json", orient="split")
+print("********************************************\n")
+
+data = {
+    "name": {"1": "Michael", "2": "John", "3": "Liza"},
+    "country": {"1": "Canada", "2": "USA", "3": "Australia"},
+    "city": {"1": "Monreal", "2": "New York", "3": "Sidney"}
+}
+
+employees = pd.DataFrame(data)
+
+employees.to_json("employees_1.json", orient="values")
+
+print("********************************************\n")
+
+
+

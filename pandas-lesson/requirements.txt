@@ -1,2 +1,23 @@
-# try: pip install -r requirements.txt
-pandas
+autopep8==2.3.2
+contourpy==1.3.1
+cycler==0.12.1
+et_xmlfile==2.0.0
+fonttools==4.55.4
+kiwisolver==1.4.8
+matplotlib==3.10.0
+numpy==2.2.1
+openpyxl==3.1.5
+packaging==24.2
+pandas==2.2.3
+pillow==11.1.0
+pycodestyle==2.12.1
+pyparsing==3.2.1
+PyQt5==5.15.11
+PyQt5-Qt5==5.15.2
+PyQt5_sip==12.16.1
+python-dateutil==2.9.0.post0
+pytz==2024.2
+setuptools==75.8.0
+six==1.17.0
+tk==0.1.0
+tzdata==2024.2

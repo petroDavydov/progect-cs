@@ -169,7 +169,15 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+# add myself
 teacher_answer.py
 desission/
 numpy-lesson.py
 pandas-lesson.py
+contacts.xlsx
+data.csv
+users.csv
+employees.json
+employees_1.json
+students.csv
+
