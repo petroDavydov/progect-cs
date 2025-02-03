@@ -108,10 +108,10 @@ students_data = students_df.loc[(students_df['Спеціальність'] == 'P
     students_df['Хобі'] == 'Run') & (students_df['Вік'] == 23)]
 print(students_data)
 
-students_data2 = students_df.loc[students_df['Вік']>=22]
+students_data2 = students_df.loc[students_df['Вік'] >= 22]
 print(students_data2)
 
-students_math = students_df.loc[students_df['Спеціальність']=='Math']
+students_math = students_df.loc[students_df['Спеціальність'] == 'Math']
 print(students_math)
 print("********************************************\n")
 
@@ -196,3 +196,132 @@ print(f"Метод prod() знаходить добуток всіх значе�
 
 sem_age = students_df['Вік'].sem()
 print(f"Стандартна помилка середнього метод sem(): \n", sem_age)
+print("********************************************\n")
+
+print(f"Сортування даних")
+
+students_sort = students_df.sort_values(by='Вік', ascending=True)
+print(f"This is sort by year: \n", students_sort)
+print("********************************************\n")
+
+print(f"Очищення даних за допомогою Pandas \n")
+
+students_data = {
+    'Імена': ['Anna', 'Bohdan', None],
+    'Вік': [21, None, 20],
+    'Спеціальність': ['Math', 'Physics', 'Biology']
+}
+
+students_df = pd.DataFrame(students_data)
+
+cleaned_df = students_df.dropna()
+print(cleaned_df)
+print("********************************************\n")
+
+print(f"Метода fillna заповнює відсутні дані вказаним значенням або методом.\n")
+
+data = pd.DataFrame([[1, 2, 3], [4, np.nan, 6], [7, np.nan, np.nan]])
+
+data = data.fillna({0: data[0].mean(), 1: data[1].mean(), 2: data[2].mean()})
+
+print(data)
+print("********************************************\n")
+
+print(f"Метод drop використовується для видалення конкретних рядків або стовпців з DataFrame.\n")
+
+students_data = {
+    'Імена': ['Anna', 'Bohdan', 'Olena'],
+    'Вік': [21, 22, 20],
+    'Спеціальність': ['Math', 'Physics', 'Biology']
+}
+
+students_df = pd.DataFrame(students_data)
+
+# students_df.drop([1], inplace=True)
+# print(f"Використовуючи [1] та inplace=True: \n", students_df)
+
+students_df.drop(['Вік'], axis=1)
+print(f"Використовуючи axis=1: \n", students_df)
+print("********************************************\n")
+
+print(f"Конвертація типів та стандартизація даних")
+
+print(f"Необхідно виконати конвертація віку в цілочисельний тип, використовуючи astype: \n")
+
+students_data = {
+    'Імена': ['Anna', 'Bohdan', 'Olena'],
+    'Вік': [21.0, 22.0, 20.0],  # Вік як float
+    'Спеціальність': ['Math', 'Physics', 'Biology']
+}
+
+students_df = pd.DataFrame(students_data)
+
+# Конвертація типу стовпця 'Вік' в int
+
+students_df['Вік'] = students_df['Вік'].astype(int)
+print(f"Use astype and .dtypes: \n", students_df.dtypes)
+print("********************************************\n")
+
+
+students_data = {
+    'Імена': ['Anna', 'Bohdan', 'Olena'],
+    'Вік': [21, 22, 20],
+    'Спеціальність': ['Math', 'PHYSICS', 'biology']
+}
+
+students_df = pd.DataFrame(students_data)
+
+# Приведення спеціальностей до нижнього регістру
+students_df['Спеціальність'] = students_df['Спеціальність'].str.lower()
+print(f"Use .str.lower: \n", students_df)
+print("********************************************\n")
+
+
+# Середні температури за дні місяця
+temperature_data = {
+    'День': list(range(1, 31)),
+    'Температура': [15, 18, None, 20, 17, 18, 20, None, 14, 16, 18, 19,
+                    None, 15, 14, 17, 16, None, 17, 20, 15, 16, 15, 19,
+                    20, None, 15, 18, 17, 16]
+}
+
+temperature_df = pd.DataFrame(temperature_data)
+
+# Знаходження середньої температури за місяць, виключаючи відсутні значення
+mean_temperature = temperature_df['Температура'].mean()
+
+# Заміна відсутніх значень температури середньою температурою за місяць
+temperature_df['Температура'].fillna(mean_temperature, inplace=True)
+# Second variant: temperature_df.fillna({'Температура' : mean_temperature}, inplace=True)
+# Third variant : temperature_df['Температура'] = temperature_df['Температура'].fillna(mean_temperature)
+print(f"Use filna and mean(): \n", temperature_df)
+print("********************************************\n")
+
+print(f"Дублікати можуть спотворювати результати аналізу. Для видалення дублюючих даних можна використовувати метод drop_duplicates: \n")
+
+data = {
+    "name": ["Michael", "Steve", "Liza", "Jhon", "Liza", "Jhon"],
+    "country": ["Canada", "USA", "Australia", "Denmark", "Australia", "Denmark"],
+    "age": [25, 32, 19, 23, 19, 23]
+}
+
+employees = pd.DataFrame(data)
+
+employees = employees.drop_duplicates()
+print(f"Use drop_duplicates(): \n", employees)
+print("********************************************\n")
+
+pd.set_option('future.no_silent_downcasting', True)  # for futur behavior
+data = {
+    'Дата': ['2023-08-01', '2023-08-02', '2023-08-03'],
+    'Температура': [25, 28, 24],
+    'Вологість': ['висока', 'низька', 'висока']
+}
+
+weather_df = pd.DataFrame(data)
+weather_df['Вологість'].replace({'висока': 80, 'низька': 30}, inplace=True)
+# weather_df.infer_objects(copy=False) #for future behavior
+
+
+print(f"Use replace: \n", weather_df)
+print("********************************************\n")
