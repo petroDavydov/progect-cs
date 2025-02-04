@@ -291,8 +291,8 @@ temperature_df = pd.DataFrame(temperature_data)
 mean_temperature = temperature_df['Температура'].mean()
 
 # Заміна відсутніх значень температури середньою температурою за місяць
-temperature_df['Температура'].fillna(mean_temperature, inplace=True)
-# Second variant: temperature_df.fillna({'Температура' : mean_temperature}, inplace=True)
+# temperature_df['Температура'].fillna(mean_temperature, inplace=True)
+temperature_df.fillna({'Температура' : mean_temperature}, inplace=True) #Second Variant, work witout "warning"
 # Third variant : temperature_df['Температура'] = temperature_df['Температура'].fillna(mean_temperature)
 print(f"Use filna and mean(): \n", temperature_df)
 print("********************************************\n")
@@ -311,7 +311,7 @@ employees = employees.drop_duplicates()
 print(f"Use drop_duplicates(): \n", employees)
 print("********************************************\n")
 
-pd.set_option('future.no_silent_downcasting', True)  # for futur behavior
+pd.set_option('future.no_silent_downcasting', True)  # for future behavior
 data = {
     'Дата': ['2023-08-01', '2023-08-02', '2023-08-03'],
     'Температура': [25, 28, 24],
@@ -319,9 +319,121 @@ data = {
 }
 
 weather_df = pd.DataFrame(data)
-weather_df['Вологість'].replace({'висока': 80, 'низька': 30}, inplace=True)
-# weather_df.infer_objects(copy=False) #for future behavior
+# weather_df['Вологість'].replace({'висока': 80, 'низька': 30}, inplace=True)
+weather_df.infer_objects(copy=False) #for future behavior
+weather_df.replace({'Вологість': 80}, {'Вологість': 30}, inplace=True) #new variant, wark without "warning"
 
 
 print(f"Use replace: \n", weather_df)
 print("********************************************\n")
+
+print(f"Робота з датами")
+
+date = pd.Timestamp("2021-09-10")
+
+print(f"Use Tamestamp,(Одинична чісова мітка):\n", date)
+print("********************************************\n")
+
+date = pd.to_datetime("2021-09-10 2:54:13")
+
+print(f"Use to_datetime(для конвертації рядкових дат в datetime об'єкти): \n", date)
+print("********************************************\n")
+
+print("""Наприклад, створимо DatetimeIndex — ряд часових міток з відсіченням в один день
+       тривалістю вісім днів, змінна date. На основі отриманого об'єкта створимо структуру
+       Series з денною температурою у місті Полтава у ці дні.""")
+
+date = pd.date_range(start='2021-09-01', freq='D', periods=8)
+print(f"date info DatetimeIndex: \n", date)
+
+temperature = pd.Series([23, 17, 17, 16, 15, 14, 17, 20], index=date)
+
+print("Use data_range: \n", temperature)
+
+print("********************************************\n")
+
+print("""Підіб'ємо підсумок та створимо прикладний набір даних з деякими поширеними проблемами,
+такими як відсутні дані, дублікати та неправильні типи даних, та покажемо, як виправити 
+ці проблеми за допомогою відповідних функцій Pandas, що ми розглянули.""")
+
+data = {
+    'Місто': ['Київ', 'Львів', 'Одеса', 'Харків', None, 'Львів'],
+    'Температура': [25, 32, None, 24, 23, 32],
+    'Вологість': ['60%', '70%', '65%', '55%', None, '70%'],
+    'Дата': ['2021-08-01', '2021-08-01', '2021-08-02', '2021-08-02', '2021-08-03', '2021-08-01']
+}
+df = pd.DataFrame(data)
+
+print(f"Start DataFrame:\n", df)
+print("********************************************\n")
+
+df.drop_duplicates(subset=['Місто', 'Дата'], inplace=True) # drop duplicate 
+df.dropna(subset=['Місто'], inplace=True) # видалити рядки з відсутніми значеннями
+# df['Температура'].fillna(df['Температура'].mean(), inplace=True) # заповнити відсутні дані середнім значенням температури
+df.fillna({'Температура': df['Температура'].mean()}, inplace=True) # work without warning
+# ---
+# Останнім ми конвертуємо "Вологість" в число, видаливши знак відсотка та конвертуємо "Дата" в об'єкт datetime.
+# df['Вологість'] = df['Вологість'].str.rstrip('%').astype('float') / 100
+df.replace({'Вологість': {r'%$': ''}}, regex=True, inplace=True) # work wiyhout warning
+df['Вологість'] = df['Вологість'].astype('float') / 100 # work without warning
+df['Дата'] = pd.to_datetime(df['Дата']) # конвертуємо "Дата" в об'єкт datetime
+
+print(f"Print after cleaning: \n", df)
+print("********************************************\n")
+
+print(f"Об'єднання DataFrame")
+
+data1 = {
+    "name": {"1": "Michael", "2": "John"},
+    "country": {"1": "Canada", "2": "USA"},
+    "age": {"1": 25, "2": 32}
+}
+
+print("Beginning-Zero Data: \n", data1)
+
+employees1 = pd.DataFrame(data1)
+print(f"First dataframe employees1: \n", employees1)
+
+data2 = {
+    "name": {"3": "Liza", "4": "Jhon"},
+    "country": {"3": "Australia", "4": "Denmark"},
+    "age": {"3": 19, "4": 23}
+}
+
+employees2 = pd.DataFrame(data2)
+print(f"Second dataframe employees2: \n", employees2)
+
+
+employees = pd.concat([employees1, employees2])
+
+print(f"Use CONCAT with dataframe employees1 and dataframe employees2: \n", employees)
+print("********************************************\n")
+
+data1 = {
+    "name": ["Michael", "John"],
+    "country": ["Canada", "USA"],
+}
+
+data2 = {
+    "name": ["Michael", "Liza"],
+    "age": [25, 19]
+}
+
+employees1 = pd.DataFrame(data1)
+employees2 = pd.DataFrame(data2)
+
+employees2 = employees2.set_index("name")
+
+merged = pd.merge(employees1, employees2, on='name', how='outer')
+
+print(f"Use MERGE with data frame employees1 and employees2: \n", merged)
+print("********************************************\n")
+
+employees1 = pd.DataFrame(data1).set_index("name")
+employees2 = pd.DataFrame(data2).set_index("name")
+
+joined = employees1.join(employees2, how="outer")
+
+print(f"Use JOIN with data frame employees1 and employees2: \n", joined)
+
+
