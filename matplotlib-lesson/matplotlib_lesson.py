@@ -8,11 +8,13 @@ date = pd.date_range(start='2021-09-01', freq='D', periods=8)
 fig, axs = plt.subplots(figsize=(10, 4))
 axs.plot(date, [23, 17, 17, 16, 15, 14, 17, 20], label='day temperature')
 axs.plot(date, [19, 11, 16, 11, 10, 10, 11, 16], label='night temperature')
+axs.plot(date, [20, 15, 23, 5, 7, 20, 41, -2], label='morning temperature')
 plt.xlabel('Дата', fontsize='small', color='midnightblue')
 plt.ylabel('Температура', fontsize='small', color='midnightblue')
 plt.title('Температура в м. Полтава', fontsize=15)
 plt.text(date[0], 15, 'Осінь досить тепла', color="blue")
 plt.text(date[0], 21, 'Друга лінія', color="blue")
+plt.text(date[0], 10, 'Третя лінія', color="green")
 
 plt.legend()
 plt.show()
@@ -60,7 +62,8 @@ plt.legend()
 plt.show()
 print("********************************************\n")
 
-date = pd.date_range(start="2021-09-01", freq="D", periods=8)
+date = pd.date_range(start="2021-09-01", freq="H", periods=8)
+print("This is data pd.data_range: \n", date)
 plt.plot(
     date,
     [23, 17, 17, 16, 15, 14, 17, 20],
@@ -71,20 +74,20 @@ plt.plot(
     marker="D",
 )
 plt.plot(
-    date, # датасет з яким працюємо
+    date,  # датасет з яким працюємо
     [19, 11, 16, 11, 10, 10, 11, 16],
     label="night temperature",
-    linestyle=":", # стиль лінії
+    linestyle=":",  # стиль лінії
     color="#061358",
-    linewidth=3, # товщина лінії
-    marker="*", # встановлення маркера
+    linewidth=3,  # товщина лінії
+    marker="*",  # встановлення маркера
 )
-plt.ylim(0, 25) # Остаточне значення
+plt.ylim(0, 25)  # Остаточне значення
 plt.xlabel("Дата", fontsize="small", color="midnightblue")
 plt.ylabel("Температура", fontsize="small", color="midnightblue")
 plt.title("Температура в м. Полтава", fontsize=15)
 plt.legend()
-plt.grid() # відображення сітки
+plt.grid()  # відображення сітки
 plt.show()
 print("********************************************\n")
 
