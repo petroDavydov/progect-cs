@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-df = pd.read_csv("bestsellers with categories.csv")
+df = pd.read_csv("bestsellers_with_categories.csv")
 # print(f"Start DataSet: \n", df)
 # print(f"First 5 raw: \n", df.head())
 # print(f"Size of DataSet, use shape: \n", df.shape)
@@ -59,7 +59,7 @@ print(f"This is temp2: \n", temp2)
 print(f"У якого автора середній рейтинг мінімальний?\
       Який у цього автора середній рейтинг?: \n",
       temp2[temp2.user_rating == temp2.user_rating.min()])
-#----- 
+# -----
 
 temp3 = pd.concat([temp1, temp2], axis=1)
 print(f"This is temp3: \n", temp3)
