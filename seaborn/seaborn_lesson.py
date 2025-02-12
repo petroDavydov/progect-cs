@@ -13,14 +13,15 @@ df = pd.DataFrame({'date': date, 'day_temperature': day,
                   'night_temperature': night})
 
 sns.lineplot({'day_temperature': day}) # 1 елемент
+plt.show()
 sns.lineplot(data=df) # всі елементи з DataFrame набору
+plt.show()
 sns.lineplot(x="night_temperature", y="day_temperature",
              data=df)  # y математичне очікування
+plt.show()
 
 sns.lineplot(x="night_temperature", y="day_temperature", data=df,
              sort=False)  # відключення сортування набору даних
-
-
 plt.show()
 
 print("******************************************\n")
